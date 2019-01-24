@@ -18,12 +18,14 @@ Foreach ($update in $all)
 
     $Regex = "KB\d*"
     $KB = $string | Select-String -Pattern $regex | Select-Object { $_.Matches }
-
-     $output = New-Object -TypeName PSobject
-     $output | add-member NoteProperty "HotFixID" -value $KB.' $_.Matches '.Value
-     $output | add-member NoteProperty "Title" -value $string
-     $OutputCollection += $output
-
+    
+    If($KB.' $_.Matches '.Success)
+        {
+         $output = New-Object -TypeName PSobject
+         $output | add-member NoteProperty "HotFixID" -value $KB.' $_.Matches '.Value
+         $output | add-member NoteProperty "Title" -value $string
+         $OutputCollection += $output
+	 }
     }
 
 # Oupput the collection sorted and formatted:
